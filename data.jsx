@@ -61,14 +61,14 @@ const render = () => {
       <Music.Widget />
       <Mpd.Widget />
       <Weather.Widget />
-      <Battery.Widget />
-      <Agenda.Widget />
       <Mic.Widget />
       <Sound.Widget />
       <ViscosityVPN.Widget />
       <Wifi.Widget />
+      <Battery.Widget />
       <Keyboard.Widget />
       <DateDisplay.Widget />
+      <Agenda.Widget />
       <Time.Widget />
     </div>
   )

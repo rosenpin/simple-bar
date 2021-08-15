@@ -42,7 +42,7 @@ export const Widget = () => {
   }
 
  return (
-    <DataWidget.Widget Icon={Icons.Date}>
+    <DataWidget.Widget>
       {event}
     </DataWidget.Widget>
   )

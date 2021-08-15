@@ -35,7 +35,7 @@ export const Widget = () => {
   if (!keyboard?.length) return null
 
   const lang = keyboard.replace("'KeyboardLayout Name' =", '').replace(';', '')
-  const formatedOutput = lang == "ABC" ? "En" : lang.substr(0,2)
+  const formatedOutput = lang == "ABC" ? "EN" : lang.substr(0,2).toUpperCase()
 
   return (
     <DataWidget.Widget classes="keyboard" Icon={Icons.Keyboard}>
