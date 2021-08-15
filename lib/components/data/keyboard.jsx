@@ -8,7 +8,7 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { keyboardStyles as styles } from '../../styles/components/data/keyboard'
 
-const refreshFrequency = 20000
+const refreshFrequency = 1000
 
 const settings = Settings.get()
 
@@ -34,7 +34,8 @@ export const Widget = () => {
 
   if (!keyboard?.length) return null
 
-  const formatedOutput = keyboard.replace("'KeyboardLayout Name' =", '').replace(';', '')
+  const lang = keyboard.replace("'KeyboardLayout Name' =", '').replace(';', '')
+  const formatedOutput = lang == "ABC" ? "En" : lang.substr(0,2)
 
   return (
     <DataWidget.Widget classes="keyboard" Icon={Icons.Keyboard}>

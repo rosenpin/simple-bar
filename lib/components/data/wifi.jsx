@@ -60,12 +60,14 @@ export const Widget = () => {
 
   const onClick = (e) => {
     Utils.clickEffect(e)
-    toggleWifi(isActive, networkDevice)
+    //toggleWifi(isActive, networkDevice)
+    Uebersicht.run(`open "/System/Library/PreferencePanes/Network.prefPane"`)
+
     getWifi()
   }
 
   return (
-    <DataWidget.Widget classes={classes} Icon={Icon} onClick={toggleWifiOnClick ? onClick : undefined}>
+    <DataWidget.Widget classes={classes} Icon={Icon} onClick={onClick}>
       {name}
     </DataWidget.Widget>
   )
