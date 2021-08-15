@@ -29,7 +29,7 @@ export const Widget = () => {
     setLoading(false)
   }
 
-  useWidgetRefresh(batteryWidget, getEvent, refreshFrequency)
+  useWidgetRefresh(agendaWidget, getEvent, refreshFrequency)
 
   if (loading) return <DataWidgetLoader.Widget className="agenda" />
   if (!state) return null

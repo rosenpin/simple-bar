@@ -70,7 +70,6 @@ const render = () => {
       <Battery.Widget />
       <Keyboard.Widget />
       <DateDisplay.Widget />
-      <Agenda.Widget />
       <Time.Widget />
     </div>
   )
