@@ -30,7 +30,7 @@ const UserWidget = ({ widget }) => {
 
   if (loading) return <DataWidgetLoader.Widget style={style} />
 
-  const Icon = Icons[icon]
+  const Icon = icon == "None" ? null : Icons[icon]
 
   const hasOnClickAction = onClickAction?.trim().length > 0
 

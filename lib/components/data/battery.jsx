@@ -68,7 +68,8 @@ export const Widget = () => {
 
   const onClick = async (e) => {
     Utils.clickEffect(e)
-    toggleCaffeinate(caffeinate, caffeinateOption)
+    //toggleCaffeinate(caffeinate, caffeinateOption)
+    Uebersicht.run(`open -a "Activity Monitor"`)
     getBattery()
   }
 

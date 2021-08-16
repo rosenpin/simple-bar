@@ -17,9 +17,9 @@ const togglePlay = (isPaused) => {
 }
 
 const getIcon = (playerState) => {
-  if (playerState === 'stopped') return Icons.Stopped
-  if (playerState === 'playing') return Icons.Playing
-  return Icons.Paused
+  if (playerState === 'stopped') return Icons.Playing
+  if (playerState === 'playing') return Icons.Paused
+  return Icons.Playing
 }
 
 const settings = Settings.get()
@@ -67,10 +67,12 @@ export const Widget = () => {
   const { showSpecter } = spotifyWidgetOptions
 
   if (!trackName.length) return null
+  const maxLength = 20
 
-  const label = artistName.length ? `${trackName} - ${artistName}` : trackName
+  const rawLabel = artistName.length ? `${trackName} - ${artistName}` : trackName
   const isPlaying = playerState === 'playing'
   const Icon = getIcon(playerState)
+  const label = rawLabel.length > maxLength ? rawLabel.substring(0,maxLength) + "...": rawLabel
 
   const onClick = (e) => {
     Utils.clickEffect(e)
@@ -79,7 +81,7 @@ export const Widget = () => {
   }
   const onRightClick = (e) => {
     Utils.clickEffect(e)
-    Uebersicht.run('open -a Spotify')
+    Uebersicht.run(`osascript -e 'tell application "Spotify" to Next Track'`)
     getSpotify()
   }
   const onMouseEnter = () => Utils.startSliding(ref.current, '.spotify__inner', '.spotify__slider')
