@@ -32,8 +32,19 @@ export const Widget = () => {
     hour12
   }
 
+  const formatOptions = 'short'
+
+  const dateOptions = {
+    weekday: formatOptions,
+    month: formatOptions,
+    day: 'numeric'
+  }
+
+  const _locale = 'en-IL'
+  const nowDate = new Date().toLocaleDateString(_locale, dateOptions)
+
   const getTime = () => {
-    const time = new Date().toLocaleString('en-UK', options)
+    const time = nowDate + " " + new Date().toLocaleString('en-UK', options)
     setState({ time })
     setLoading(false)
   }
