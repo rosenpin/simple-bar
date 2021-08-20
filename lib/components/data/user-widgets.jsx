@@ -12,7 +12,7 @@ const { userWidgetsList } = settings.userWidgets
 const UserWidget = ({ widget }) => {
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(true)
-  const { icon, backgroundColor, output, onClickAction, refreshFrequency } = widget
+  const { icon, backgroundColor, output, onClickAction, onRightClickAction, refreshFrequency } = widget
 
   const getUserWidget = async () => {
     const widgetOutput = await Uebersicht.run(output)
@@ -26,13 +26,16 @@ const UserWidget = ({ widget }) => {
 
   useWidgetRefresh(true, getUserWidget, refreshFrequency)
 
-  const style = { backgroundColor: `var(--${backgroundColor})` }
+  const isCustomColor = !Settings.userWidgetColors.includes(backgroundColor)
+
+  const style = { backgroundColor: isCustomColor ? backgroundColor : `var(${backgroundColor})` }
 
   if (loading) return <DataWidgetLoader.Widget style={style} />
 
   const Icon = icon == "None" ? null : Icons[icon]
 
   const hasOnClickAction = onClickAction?.trim().length > 0
+  const hasRightClickAction = onRightClickAction?.trim().length > 0
 
   const onClick = (e) => {
     Utils.clickEffect(e)
@@ -40,10 +43,17 @@ const UserWidget = ({ widget }) => {
     getUserWidget()
   }
 
+  const onRightClick = (e) => {
+    Utils.clickEffect(e)
+    Uebersicht.run(onRightClickAction)
+    getUserWidget()
+  }
+
   const onUserWidgetClick = hasOnClickAction ? { onClick } : {}
+  const onUserWidgetRightClick = hasRightClickAction ? { onRightClick } : {}
 
   return (
-    <DataWidget.Widget Icon={Icon} style={style} {...onUserWidgetClick}>
+    <DataWidget.Widget Icon={Icon} style={style} {...onUserWidgetClick} {...onUserWidgetRightClick}>
       {state}
     </DataWidget.Widget>
   )
@@ -51,10 +61,7 @@ const UserWidget = ({ widget }) => {
 
 const UserWidgets = () => {
   const keys = Object.keys(userWidgetsList)
-  return keys.map((key) => {
-    const widget = userWidgetsList[key]
-    return <UserWidget key={key} widget={widget} />
-  })
+  return keys.map((key) => <UserWidget key={key} widget={userWidgetsList[key]} />)
 }
 
 export default UserWidgets

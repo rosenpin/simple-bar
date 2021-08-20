@@ -17,9 +17,8 @@ export const Widget = Uebersicht.React.forwardRef(
     const onClickWrapper = (e) => {
       var middle = e.button == 1 || 1 == e.button&2;
       if (middle) {
-        onMiddleClick(e)
+         onMiddleClick(e)
        } else {
-         Utils.clickEffect(e)
          onClick(e)
        }
     }
