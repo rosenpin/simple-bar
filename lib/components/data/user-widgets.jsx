@@ -12,7 +12,8 @@ const { userWidgetsList } = settings.userWidgets
 const UserWidget = ({ widget }) => {
   const [state, setState] = Uebersicht.React.useState()
   const [loading, setLoading] = Uebersicht.React.useState(true)
-  const { icon, backgroundColor, output, onClickAction, onRightClickAction, refreshFrequency } = widget
+  const { icon, backgroundColor, output, onClickAction, onRightClickAction, onMiddleClickAction, refreshFrequency } =
+    widget
 
   const getUserWidget = async () => {
     const widgetOutput = await Uebersicht.run(output)
@@ -40,24 +41,31 @@ const UserWidget = ({ widget }) => {
 
   const hasOnClickAction = onClickAction?.trim().length > 0
   const hasRightClickAction = onRightClickAction?.trim().length > 0
+  const hasMiddleClickAction = onMiddleClickAction?.trim().length > 0
 
   const onClick = (e) => {
     Utils.clickEffect(e)
     Uebersicht.run(onClickAction)
     getUserWidget()
   }
-
   const onRightClick = (e) => {
     Utils.clickEffect(e)
     Uebersicht.run(onRightClickAction)
     getUserWidget()
   }
-
-  const onUserWidgetClick = hasOnClickAction ? { onClick } : {}
-  const onUserWidgetRightClick = hasRightClickAction ? { onRightClick } : {}
+  const onMiddleClick = (e) => {
+    Utils.clickEffect(e)
+    Uebersicht.run(onMiddleClickAction)
+    getUserWidget()
+  }
+  const onClickProps = {
+    onClick: hasOnClickAction && onClick,
+    onRightClick: hasRightClickAction && onRightClick,
+    onMiddleClick: hasMiddleClickAction && onMiddleClick
+  }
 
   return (
-    <DataWidget.Widget Icon={Icon} style={style} {...onUserWidgetClick} {...onUserWidgetRightClick}>
+    <DataWidget.Widget Icon={Icon} style={style} {...onClickProps}>
       {state}
     </DataWidget.Widget>
   )

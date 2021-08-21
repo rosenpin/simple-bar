@@ -10,6 +10,21 @@ export { wifiStyles as styles } from '../../styles/components/data/wifi'
 
 const refreshFrequency = 20000
 
+const toggleWifi = (isActive, networkDevice) => {
+  if (isActive) {
+    Uebersicht.run(`networksetup -setairportpower ${networkDevice} off`)
+    Utils.notification('Disabling network...')
+  } else {
+    Uebersicht.run(`networksetup -setairportpower ${networkDevice} on`)
+    Utils.notification('Enabling network...')
+  }
+}
+
+const openWifiPreferences = (e) => {
+  Utils.clickEffect(e)
+  Uebersicht.run(`open /System/Library/PreferencePanes/Network.prefPane/`)
+}
+
 const renderName = (name) => {
   if (!name) return ''
   if (name === 'with an AirPort network.y off.') return 'Disabled'
@@ -62,7 +77,12 @@ export const Widget = () => {
   }
 
   return (
-    <DataWidget.Widget classes={classes} Icon={Icon} onClick={toggleWifiOnClick ? onClick : undefined} onRightClick={onRightClick}>
+    <DataWidget.Widget
+      classes={classes}
+      Icon={Icon}
+      onClick={toggleWifiOnClick ? onClick : undefined}
+      onRightClick={openWifiPreferences}
+    >
       {name}
     </DataWidget.Widget>
   )

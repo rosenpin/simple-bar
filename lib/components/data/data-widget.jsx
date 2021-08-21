@@ -14,13 +14,10 @@ export const Widget = Uebersicht.React.forwardRef(
     const Tag = getTag(onClick, href)
     const dataWidgetClasses = Utils.classnames('data-widget', classes, { 'data-widget--clickable': onClick })
 
-    const onClickWrapper = (e) => {
-      var middle = e.button == 1 || 1 == e.button&2;
-      if (middle) {
-         onMiddleClick(e)
-       } else {
-         onClick(e)
-       }
+    const onClickProp = (e) => {
+      const { metaKey, which } = e
+      const action = metaKey || which === 2 ? onMiddleClick : onClick
+      if (action) action(e)
     }
 
     return (
@@ -28,8 +25,8 @@ export const Widget = Uebersicht.React.forwardRef(
         ref={ref}
         className={dataWidgetClasses}
         href={href}
-        onClick={onClickWrapper}
-        onContextMenu={onRightClick}
+        onClick={onClickProp}
+        onContextMenu={onRightClick || undefined}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         style={style}

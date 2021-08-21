@@ -16,15 +16,20 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   const [spaceLabel, setSpaceLabel] = Uebersicht.React.useState(label?.length ? label : index)
 
   const { spacesDisplay } = settings
-  const { displayAllSpacesOnAllScreens, exclusionsAsRegex, displayStickyWindowsSeparately, hideDuplicateAppsInSpaces, hoverForOptions } =
-    spacesDisplay
+  const {
+    displayAllSpacesOnAllScreens,
+    exclusionsAsRegex,
+    displayStickyWindowsSeparately,
+    hideDuplicateAppsInSpaces,
+    showOptionsOnHover
+  } = spacesDisplay
   if (!displayAllSpacesOnAllScreens && display !== space.display) return null
 
   const exclusions = exclusionsAsRegex ? spacesDisplay.exclusions : spacesDisplay.exclusions.split(', ')
   const titleExclusions = exclusionsAsRegex ? spacesDisplay.titleExclusions : spacesDisplay.titleExclusions.split(', ')
 
   const onMouseEnter = (e) => {
-    if (!hoverForOptions) return
+    if (!showOptionsOnHover) return
     const { altKey, metaKey } = e
     if (altKey) return
     setHovered(true)
@@ -86,7 +91,7 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
   return (
     <Uebersicht.React.Fragment>
       {spacesDisplay.displayAllSpacesOnAllScreens && lastOfSpace && <div className="spaces__separator" />}
-      <div className={classes} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter} >
+      <div className={classes} onMouseLeave={onMouseLeave} onMouseEnter={onMouseEnter}>
         <button className="space__inner" onClick={onClick} onContextMenu={onRightClick}>
           <input
             ref={labelRef}
@@ -97,11 +102,9 @@ const Space = ({ space, display, windows, displayIndex, SIPDisabled, lastOfSpace
             style={{ width: `${labelSize}ch` }}
             readOnly={!editable}
           />
-          <OpenedApps type={type} apps={displayStickyWindowsSeparately ? apps : allApps} />
+          <OpenedApps apps={displayStickyWindowsSeparately ? apps : allApps} />
         </button>
-        {SIPDisabled && (
-          <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />
-        )}
+        {SIPDisabled && <SpaceOptions index={index} setHovered={setHovered} displayIndex={displayIndex} />}
       </div>
     </Uebersicht.React.Fragment>
   )
