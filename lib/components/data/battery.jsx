@@ -17,12 +17,12 @@ const getTransform = (value) => {
   return `scaleX(${transform})`
 }
 
-const toggleCaffeinate = (caffeinate, option) => {
+const toggleCaffeinate = async (caffeinate, option) => {
   if (!caffeinate.length) {
     Uebersicht.run(`caffeinate ${option} &`)
     Utils.notification('Enabling caffeinate...')
   } else {
-    Uebersicht.run('pkill -f caffeinate')
+    await Uebersicht.run('pkill -f caffeinate')
     Utils.notification('Disabling caffeinate...')
   }
 }
@@ -68,8 +68,7 @@ export const Widget = () => {
 
   const onClick = async (e) => {
     Utils.clickEffect(e)
-    //toggleCaffeinate(caffeinate, caffeinateOption)
-    Uebersicht.run(`open -a "Activity Monitor"`)
+    await toggleCaffeinate(caffeinate, caffeinateOption)
     getBattery()
   }
 
