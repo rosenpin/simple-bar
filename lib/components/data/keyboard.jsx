@@ -8,7 +8,7 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { keyboardStyles as styles } from '../../styles/components/data/keyboard'
 
-const refreshFrequency = 800
+const refreshFrequency = 600000
 
 const settings = Settings.get()
 var currentLayout = null
