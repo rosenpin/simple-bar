@@ -8,7 +8,7 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { keyboardStyles as styles } from '../../styles/components/data/keyboard'
 
-const refreshFrequency = 600000
+const refreshFrequency = 500
 
 const settings = Settings.get()
 var currentLayout = null
@@ -21,7 +21,7 @@ export const Widget = () => {
 
   const getKeyboard = async () => {
     const keyboard = await Uebersicht.run(
-      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | egrep -w 'KeyboardLayout Name' | sed 's/"//g' | sed 's/KeyboardLayout Name = //g'`
+      `defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources | ag -o '(?<="KeyboardLayout Name" = ).+?(?=;)'`
     )
     // skip updating state if language didn't change
     if (currentLayout != keyboard) currentLayout = keyboard
@@ -38,7 +38,7 @@ export const Widget = () => {
 
   if (!keyboard?.length) return null
 
-  const lang = keyboard.replace("'KeyboardLayout Name' =", '').replace(';', '')
+  const lang = keyboard.replace("'KeyboardLayout Name' =", '').replace(';', '').replace('\"', '')
   const formatedOutput = lang == "ABC" ? "EN" : lang.substr(0,2).toUpperCase()
 
   return (
