@@ -8,7 +8,7 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { dateStyles as styles } from '../../styles/components/data/date-display'
 
-const refreshFrequency = 1000
+const refreshFrequency = 60 * 1000
 
 const openCalendarApp = (calendarApp) => {
   const appName = calendarApp || 'Calendar'

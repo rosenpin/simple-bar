@@ -9,7 +9,7 @@ import useWidgetRefresh from '../../hooks/use-widget-refresh'
 
 export { spotifyStyles as styles } from '../../styles/components/data/spotify'
 
-const refreshFrequency = 10000
+const refreshFrequency = 60 * 1000
 
 const togglePlay = (isPaused) => {
   const state = isPaused ? 'play' : 'pause'

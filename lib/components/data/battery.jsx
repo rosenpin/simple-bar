@@ -8,7 +8,7 @@ import * as Settings from '../../settings'
 
 export { batteryStyles as styles } from '../../styles/components/data/battery'
 
-const refreshFrequency = 10000
+const refreshFrequency = 2*60*1000
 
 const getTransform = (value) => {
   let transform = `0.${value}`

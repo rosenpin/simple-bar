@@ -8,7 +8,7 @@ import * as Settings from '../../settings'
 
 export { timeStyles as styles } from '../../styles/components/data/time'
 
-const refreshFrequency = 1000
+const refreshFrequency = 60 * 1000
 
 const displayNotificationCenter = () =>
   Uebersicht.run(
